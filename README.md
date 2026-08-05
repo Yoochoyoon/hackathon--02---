@@ -51,8 +51,8 @@
 서버·빌드·설치가 필요 없다. 저장소를 받아 `index.html` 을 브라우저로 열면 끝이다.
 
 ```bash
-git clone https://github.com/Yoochoyoon/hackathon--02---.git
-cd hackathon--02---
+git clone https://github.com/Yoochoyoon/hackathon--02--cho.git
+cd hackathon--02--cho
 ```
 
 `index.html` 더블클릭 — 또는 로컬 서버로 열려면:

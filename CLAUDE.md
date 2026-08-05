@@ -6,7 +6,7 @@
 - **팀원**:
   - 유초윤 (GitHub: `Yoochoyoon`) — **필수기능 담당**
   - 신찬영 (GitHub: `scyscu153-byte`) — **차별화기능 담당**
-- **저장소**: https://github.com/Yoochoyoon/hackathon--02---.git
+- **저장소**: https://github.com/Yoochoyoon/hackathon--02--cho.git
 - **프로젝트 설명**: 동아리 활동(모임/행사) 이력을 등록·조회·삭제·수정하고, 검색/필터/통계로 한눈에 파악할 수 있는 단일 페이지 웹앱
 
 ## 2. 기술 스택
