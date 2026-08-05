@@ -131,6 +131,9 @@ input:focus, textarea:focus, select:focus {
 
 textarea { min-height: 64px; resize: vertical; }
 
+/* 메모칸: JS가 입력 길이에 맞춰 height를 늘려주므로 수동 리사이즈는 끈다 */
+#memo { resize: none; overflow: hidden; }
+
 /* ── 버튼 (LDSG action-button: opacity 기반 상태) ───────────── */
 
 .btn, button {
@@ -148,12 +151,25 @@ textarea { min-height: 64px; resize: vertical; }
 .btn:hover, button:hover { opacity: 0.7; }
 .btn:active, button:active { opacity: 0.5; }
 
+/* 수정/삭제 버튼을 나란히, 간격을 두고 배치한다 */
+.item-actions {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+
+/* 텍스트 길이가 달라도 두 버튼 크기가 같도록 고정폭을 준다 */
+.item-actions button {
+  min-width: 60px;
+  text-align: center;
+}
+
 /* 삭제처럼 되돌릴 수 없는 동작: 기본은 테두리만, hover 시 빨갛게 채운다 */
 button.danger, button[data-action="delete"] {
   background: transparent;
   color: var(--negative);
   border: 1px solid currentColor;
-  padding: 4px var(--sp-3);
+  padding: 6px var(--sp-3);
   font-size: 13px;
   font-weight: 500;
 }
@@ -173,7 +189,7 @@ button.danger:active, button[data-action="delete"]:active { opacity: 0.7; }
   border: 1px solid currentColor;
   padding: 6px var(--sp-3);
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 #activityList button:not([data-action="delete"]):hover {
