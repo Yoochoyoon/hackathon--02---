@@ -4,8 +4,7 @@
 프레임워크 없이 HTML / CSS / JavaScript 와 브라우저 `localStorage` 만으로 만들었다.
 
 > 2026 해커톤 · **팀 02 시너지** (13:30–16:40, 실제 구현 시간 약 130분)
-
-![검색 결과와 월별 통계](docs/screenshots/02_desktop_search_result_and_chart.jpg)
+배포 링크 : https://yoochoyoon.github.io/hackathon--02--cho/
 
 ---
 
