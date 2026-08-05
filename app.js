@@ -42,6 +42,13 @@
     document.querySelector('#formError').textContent = message;
   }
 
+  // 메모칸을 입력 내용 길이에 맞춰 늘린다
+  function autoGrowMemo() {
+    var el = document.querySelector('#memo');
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+  }
+
   // "홍길동, 김철수" 같은 입력을 ["홍길동", "김철수"]로 바꾼다. 빈 항목은 버린다
   function parseAttendees(text) {
     return text.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
@@ -70,6 +77,7 @@
 
   function resetForm() {
     document.querySelector('#activityForm').reset();
+    document.querySelector('#memo').style.height = '';
     editingId = null;
     document.querySelector('#submitBtn').textContent = '등록';
   }
@@ -122,6 +130,7 @@
     document.querySelector('#memo').value = activity.memo;
     document.querySelector('#submitBtn').textContent = '수정 완료';
     showError('');
+    autoGrowMemo();
   }
 
   function deleteActivity(id) {
@@ -180,12 +189,16 @@
     deleteBtn.textContent = '삭제';
     deleteBtn.addEventListener('click', function () { deleteActivity(activity.id); });
 
+    var actions = document.createElement('div');
+    actions.className = 'item-actions';
+    actions.appendChild(editBtn);
+    actions.appendChild(deleteBtn);
+
     li.appendChild(title);
     li.appendChild(badge);
     li.appendChild(meta);
     li.appendChild(memo);
-    li.appendChild(editBtn);
-    li.appendChild(deleteBtn);
+    li.appendChild(actions);
     return li;
   }
 
@@ -213,6 +226,7 @@
     document.querySelector('#activityForm').addEventListener('submit', handleSubmit);
     document.querySelector('#filterFrom').addEventListener('change', renderList);
     document.querySelector('#filterTo').addEventListener('change', renderList);
+    document.querySelector('#memo').addEventListener('input', autoGrowMemo);
     renderList();
   }
 
