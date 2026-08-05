@@ -1,0 +1,43 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>mermaid render</title>
+<style>
+  body { margin: 0; background: #fff; font-family: system-ui, sans-serif; }
+  .fig { padding: 16px; background: #fff; display: inline-block; }
+  h3 { margin: 8px 16px 0; font-size: 13px; color: #555; }
+</style>
+<h3 id="t1">화면 구성</h3>
+<div class="fig" id="fig1">
+<pre class="mermaid">
+flowchart LR
+    subgraph page["활동 기록 화면 (단일 페이지)"]
+        direction LR
+        H["제목"]
+        F["활동 등록 폼&lt;br/&gt;활동명 · 날짜 · 장소 · 참여 인원 · 메모 · [등록]"]
+        S["검색창&lt;br/&gt;활동명 · 장소 키워드"]
+        L["활동 목록 (최신순)&lt;br/&gt;활동명 (날짜) · 장소 · N명 · 메모 · [삭제]"]
+        H --> F --> S --> L
+    end
+</pre>
+</div>
+<h3 id="t2">등록 처리 흐름</h3>
+<div class="fig" id="fig2">
+<pre class="mermaid">
+flowchart TD
+    A["등록 버튼"] --> B{"활동명이 있나"}
+    B -->|없음| E["메시지 표시&lt;br/&gt;저장 안 함"]
+    B -->|있음| C{"날짜가 미래인가"}
+    C -->|미래| E
+    C -->|아님| D{"참여 인원이&lt;br/&gt;1 이상 정수인가"}
+    D -->|아님| E
+    D -->|맞음| G["localStorage 에 추가&lt;br/&gt;createdAt 기록"]
+    G --> H["목록 다시 그리기"]
+</pre>
+</div>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  window.__mermaidReady = false;
+  await mermaid.run();
+  window.__mermaidReady = true;
+</script>
