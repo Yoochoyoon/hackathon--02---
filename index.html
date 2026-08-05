@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>동아리 활동 기록 관리</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <h1>동아리 활동 기록</h1>
+
+    <form id="activityForm" novalidate>
+      <label>활동명
+        <input type="text" id="title" required>
+      </label>
+      <label>날짜
+        <input type="date" id="date" required>
+      </label>
+      <label>장소
+        <input type="text" id="place">
+      </label>
+      <label>참여 인원
+        <input type="number" id="memberCount" min="1" step="1">
+      </label>
+      <label>메모
+        <textarea id="memo"></textarea>
+      </label>
+      <p class="error" id="formError"></p>
+      <button type="submit" id="submitBtn">등록</button>
+    </form>
+
+    <h2>검색</h2>
+    <input type="text" id="searchBox" placeholder="활동명 또는 장소로 검색">
+    <p id="searchEmpty"></p>
+
+    <h2>기간 필터</h2>
+    <div id="filterControls">
+      <label>부터 <input type="date" id="filterFrom"></label>
+      <label>까지 <input type="date" id="filterTo"></label>
+    </div>
+
+    <h2>월별 통계</h2>
+    <canvas id="statsChart"></canvas>
+
+    <h2>활동 목록</h2>
+    <ul id="activityList"></ul>
+    <div id="emptyMessage" class="empty-message">등록된 활동이 없습니다.</div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="features.js"></script>
+</body>
+</html>
