@@ -95,6 +95,13 @@ Chart.js 같은 CDN 을 붙일 수 있었지만, 네트워크가 막히면 시�
 `display` 만 건드려 걸러 낸다. 두 사람이 각각 `app.js`(목록 렌더)와 `features.js`(검색)를
 맡았기 때문에, 검색이 목록을 재렌더하면 서로의 결과를 덮어쓴다.
 
+**비주얼은 Apple 스펙을 버리고 LINE Design System 으로 갔다.**
+처음엔 `getdesign` 카탈로그의 Apple 스펙(제품 마케팅 사이트 톤 — 80px 여백의 히어로,
+명암 교차 풀블리드 섹션)을 그대로 입혔는데, 실제로 켜보니 활동 하나 등록하는 데
+히어로 헤드라인이 있을 이유가 없었다. 대신 모바일 앱 컴포넌트 기반이라 밀도가 높고
+"한 화면에 다 보이는" 걸 지향하는 LINE Design System(LDSG) 토큰(그린 `#06C755`,
+opacity 기반 hover/press, 5·7px 라운드)으로 바꿨다. `DESIGN.md` 에 전체 스펙이 있다.
+
 ---
 
 ## 파일 구조
@@ -105,13 +112,19 @@ style.css       스타일 · 반응형
 app.js          핵심 로직 — 등록/조회/삭제/수정/기간 필터/검증
 features.js     차별화 기능 — 검색/월별 통계
 CLAUDE.md       Claude Code 작업 규칙
+DESIGN.md       비주얼 디자인 스펙 (LINE Design System 토큰 — 아래 참고)
 docs/           계획·시간표·작업기록·보고서·스크린샷
 ```
 
 활동 1건의 저장 형태:
 
 ```js
-{ id, title, date, place, memberCount, memo, createdAt }
+{
+  id, title, date, place, memberCount, memo, createdAt,
+  category,    // 활동 유형: 정기모임 | 행사 | 봉사 | 기타
+  attendees,   // 참여자 명단, 문자열 배열 (선택)
+  cost         // 활동에 사용한 회비 금액, 원 단위 (선택, 기본 0)
+}
 ```
 
 ---
