@@ -10,57 +10,69 @@
   <div id="app">
     <h1>동아리 활동 기록</h1>
 
-    <form id="activityForm" novalidate>
-      <label>활동명 *
-        <input type="text" id="title" required>
-      </label>
-      <label>날짜 *
-        <input type="date" id="date" required>
-      </label>
-      <label>장소
-        <input type="text" id="place">
-      </label>
-      <label>참여 인원 *
-        <input type="number" id="memberCount" min="1" step="1" required>
-      </label>
-      <label>활동 유형
-        <select id="category">
-          <option value="정기모임">정기모임</option>
-          <option value="행사">행사</option>
-          <option value="봉사">봉사</option>
-          <option value="기타">기타</option>
-        </select>
-      </label>
-      <label>참여자 명단
-        <input type="text" id="attendees" placeholder="쉼표로 구분 (예: 홍길동, 김철수)">
-      </label>
-      <label>회비 사용 금액(원)
-        <input type="number" id="cost" min="0" step="1" placeholder="0">
-      </label>
-      <label>메모
-        <textarea id="memo"></textarea>
-      </label>
-      <p class="error" id="formError"></p>
-      <button type="submit" id="submitBtn">등록</button>
-    </form>
+    <!-- 등록 폼: TodoMVC처럼 입력을 맨 위 카드 하나로 -->
+    <section class="panel" id="formPanel">
+      <form id="activityForm" novalidate>
+        <label>활동명 *
+          <input type="text" id="title" required>
+        </label>
+        <label>날짜 *
+          <input type="date" id="date" required>
+        </label>
+        <label>장소
+          <input type="text" id="place">
+        </label>
+        <label>참여 인원 *
+          <input type="number" id="memberCount" min="1" step="1" required>
+        </label>
+        <label>활동 유형
+          <select id="category">
+            <option value="정기모임">정기모임</option>
+            <option value="행사">행사</option>
+            <option value="봉사">봉사</option>
+            <option value="기타">기타</option>
+          </select>
+        </label>
+        <label>참여자 명단
+          <input type="text" id="attendees" placeholder="쉼표로 구분 (예: 홍길동, 김철수)">
+        </label>
+        <label>회비 사용 금액(원)
+          <input type="number" id="cost" min="0" step="1" placeholder="0">
+        </label>
+        <label>메모
+          <textarea id="memo"></textarea>
+        </label>
+        <p class="error" id="formError"></p>
+        <button type="submit" id="submitBtn">등록</button>
+      </form>
+    </section>
 
-    <h2>검색</h2>
-    <input type="text" id="searchBox" placeholder="활동명 또는 장소로 검색">
-    <p id="searchEmpty"></p>
+    <!-- 목록 패널: 검색+기간필터를 목록 바로 위 툴바 한 줄로 묶음 -->
+    <section class="panel" id="listPanel">
+      <div class="toolbar">
+        <input type="text" id="searchBox" placeholder="활동명 또는 장소로 검색">
+        <div id="filterControls">
+          <label>부터 <input type="date" id="filterFrom"></label>
+          <label>까지 <input type="date" id="filterTo"></label>
+        </div>
+      </div>
+      <p id="searchEmpty"></p>
 
-    <h2>기간 필터</h2>
-    <div id="filterControls">
-      <label>부터 <input type="date" id="filterFrom"></label>
-      <label>까지 <input type="date" id="filterTo"></label>
-    </div>
+      <ul id="activityList"></ul>
+      <div id="emptyMessage" class="empty-message">등록된 활동이 없습니다.</div>
 
-    <h2>월별 통계</h2>
-    <canvas id="statsChart"></canvas>
+      <!-- TodoMVC의 "3 items left!" 처럼 목록 하단 상태 바로 통합 -->
+      <div class="list-status">
+        <span id="listCount"></span>
+        <span id="costSummary"></span>
+      </div>
+    </section>
 
-    <h2>활동 목록</h2>
-    <p id="costSummary"></p>
-    <ul id="activityList"></ul>
-    <div id="emptyMessage" class="empty-message">등록된 활동이 없습니다.</div>
+    <!-- 통계는 부가 정보라 접어둠. 순수 HTML details라 별도 JS 불필요 -->
+    <details id="statsPanel">
+      <summary>월별 통계 보기</summary>
+      <canvas id="statsChart"></canvas>
+    </details>
   </div>
 
   <script src="app.js"></script>

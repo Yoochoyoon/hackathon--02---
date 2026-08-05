@@ -150,9 +150,10 @@
     var title = document.createElement('span');
     title.className = 'title';
     title.textContent = activity.title + ' (' + activity.date + ')';
-    if (activity.category) {
-      title.textContent += ' [' + activity.category + ']';
-    }
+
+    var badge = document.createElement('span');
+    badge.className = 'category-badge';
+    badge.textContent = activity.category || '기타';
 
     var meta = document.createElement('div');
     meta.className = 'meta';
@@ -180,6 +181,7 @@
     deleteBtn.addEventListener('click', function () { deleteActivity(activity.id); });
 
     li.appendChild(title);
+    li.appendChild(badge);
     li.appendChild(meta);
     li.appendChild(memo);
     li.appendChild(editBtn);
@@ -199,8 +201,10 @@
     filtered.forEach(function (a) { listEl.appendChild(createItem(a)); });
 
     var totalCost = filtered.reduce(function (sum, a) { return sum + (a.cost || 0); }, 0);
+    document.querySelector('#listCount').textContent =
+      filtered.length === 0 ? '' : filtered.length + '개 활동';
     document.querySelector('#costSummary').textContent =
-      filtered.length === 0 ? '' : '회비 사용 합계: ' + totalCost.toLocaleString() + '원';
+      filtered.length === 0 ? '' : '회비 사용 합계 ' + totalCost.toLocaleString() + '원';
 
     if (window.Features) window.Features.refresh();
   }
