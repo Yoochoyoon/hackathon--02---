@@ -42,14 +42,30 @@
     document.querySelector('#formError').textContent = message;
   }
 
+  // "홍길동, 김철수" 같은 입력을 ["홍길동", "김철수"]로 바꾼다. 빈 항목은 버린다
+  function parseAttendees(text) {
+    return text.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  }
+
   function readForm() {
+    var costVal = parseInt(document.querySelector('#cost').value, 10);
     return {
       title: document.querySelector('#title').value.trim(),
       date: document.querySelector('#date').value,
       place: document.querySelector('#place').value.trim(),
       memberCount: parseInt(document.querySelector('#memberCount').value, 10),
+      category: document.querySelector('#category').value,
+      attendees: parseAttendees(document.querySelector('#attendees').value),
+      cost: Number.isInteger(costVal) && costVal >= 0 ? costVal : 0,
       memo: document.querySelector('#memo').value.trim()
     };
+  }
+
+  // 같은 날짜에 같은 활동명이 이미 있으면 true (수정 중인 항목 자신은 제외)
+  function isDuplicate(data) {
+    return loadActivities().some(function (a) {
+      return a.id !== editingId && a.title === data.title && a.date === data.date;
+    });
   }
 
   function resetForm() {
@@ -65,6 +81,11 @@
     showError(error);
     if (error) return;
 
+    if (isDuplicate(data)) {
+      var proceed = window.confirm('같은 날짜에 같은 이름의 활동이 이미 있습니다. 그래도 등록할까요?');
+      if (!proceed) return;
+    }
+
     var list = loadActivities();
     if (editingId) {
       list = list.map(function (a) {
@@ -77,6 +98,9 @@
         date: data.date,
         place: data.place,
         memberCount: data.memberCount,
+        category: data.category,
+        attendees: data.attendees,
+        cost: data.cost,
         memo: data.memo,
         createdAt: new Date().toISOString()
       });
@@ -92,6 +116,9 @@
     document.querySelector('#date').value = activity.date;
     document.querySelector('#place').value = activity.place;
     document.querySelector('#memberCount').value = activity.memberCount;
+    document.querySelector('#category').value = activity.category || '정기모임';
+    document.querySelector('#attendees').value = (activity.attendees || []).join(', ');
+    document.querySelector('#cost').value = activity.cost || '';
     document.querySelector('#memo').value = activity.memo;
     document.querySelector('#submitBtn').textContent = '수정 완료';
     showError('');
@@ -123,10 +150,20 @@
     var title = document.createElement('span');
     title.className = 'title';
     title.textContent = activity.title + ' (' + activity.date + ')';
+    if (activity.category) {
+      title.textContent += ' [' + activity.category + ']';
+    }
 
     var meta = document.createElement('div');
     meta.className = 'meta';
-    meta.textContent = activity.place + ' · ' + activity.memberCount + '명';
+    var metaText = activity.place + ' · ' + activity.memberCount + '명';
+    if (activity.attendees && activity.attendees.length > 0) {
+      metaText += ' (' + activity.attendees.join(', ') + ')';
+    }
+    if (activity.cost) {
+      metaText += ' · 회비 ' + activity.cost.toLocaleString() + '원';
+    }
+    meta.textContent = metaText;
 
     var memo = document.createElement('p');
     memo.textContent = activity.memo;
@@ -160,6 +197,10 @@
 
     emptyEl.style.display = filtered.length === 0 ? '' : 'none';
     filtered.forEach(function (a) { listEl.appendChild(createItem(a)); });
+
+    var totalCost = filtered.reduce(function (sum, a) { return sum + (a.cost || 0); }, 0);
+    document.querySelector('#costSummary').textContent =
+      filtered.length === 0 ? '' : '회비 사용 합계: ' + totalCost.toLocaleString() + '원';
 
     if (window.Features) window.Features.refresh();
   }

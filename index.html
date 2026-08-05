@@ -11,17 +11,31 @@
     <h1>동아리 활동 기록</h1>
 
     <form id="activityForm" novalidate>
-      <label>활동명
+      <label>활동명 *
         <input type="text" id="title" required>
       </label>
-      <label>날짜
+      <label>날짜 *
         <input type="date" id="date" required>
       </label>
       <label>장소
         <input type="text" id="place">
       </label>
-      <label>참여 인원
-        <input type="number" id="memberCount" min="1" step="1">
+      <label>참여 인원 *
+        <input type="number" id="memberCount" min="1" step="1" required>
+      </label>
+      <label>활동 유형
+        <select id="category">
+          <option value="정기모임">정기모임</option>
+          <option value="행사">행사</option>
+          <option value="봉사">봉사</option>
+          <option value="기타">기타</option>
+        </select>
+      </label>
+      <label>참여자 명단
+        <input type="text" id="attendees" placeholder="쉼표로 구분 (예: 홍길동, 김철수)">
+      </label>
+      <label>회비 사용 금액(원)
+        <input type="number" id="cost" min="0" step="1" placeholder="0">
       </label>
       <label>메모
         <textarea id="memo"></textarea>
@@ -44,6 +58,7 @@
     <canvas id="statsChart"></canvas>
 
     <h2>활동 목록</h2>
+    <p id="costSummary"></p>
     <ul id="activityList"></ul>
     <div id="emptyMessage" class="empty-message">등록된 활동이 없습니다.</div>
   </div>
