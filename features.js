@@ -51,8 +51,19 @@
     var empty = document.querySelector('#searchEmpty');
     if (empty) {
       var noResult = keyword && items.length > 0 && shown === 0;
-      empty.style.display = noResult ? '' : 'none';
-      empty.textContent = '"' + keyword + '" 와(과) 일치하는 활동이 없습니다.';
+      // style.css의 #searchEmpty 기본값이 display:none이라, 여기서 ''로
+      // 지우면 인라인 스타일이 사라질 뿐 스타일시트의 none으로 되돌아가
+      // 버려서 메시지가 절대 보이지 않는다. 'block'을 명시해야 한다.
+      empty.style.display = noResult ? 'block' : 'none';
+      // textContent를 조건 없이 매번 다시 쓰면, 값이 같아도 텍스트 노드가
+      // 교체되면서 childList mutation이 발생한다. watchDom()의
+      // MutationObserver(subtree:true)가 이걸 감지해 refresh()를 다시
+      // 부르고, 그 안에서 또 textContent를 써서 다시 mutation이 발생하는
+      // 무한 루프에 빠져 탭이 멈춘다. 값이 실제로 바뀔 때만 써서 끊는다.
+      var nextText = '"' + keyword + '" 와(과) 일치하는 활동이 없습니다.';
+      if (empty.textContent !== nextText) {
+        empty.textContent = nextText;
+      }
     }
     return shown;
   }
