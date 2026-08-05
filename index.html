@@ -10,6 +10,8 @@
   <div id="app">
     <h1>동아리 활동 기록</h1>
 
+    <div class="layout">
+    <div class="col-side">
     <!-- 등록 폼: TodoMVC처럼 입력을 맨 위 카드 하나로 -->
     <section class="panel" id="formPanel">
       <form id="activityForm" novalidate>
@@ -47,6 +49,14 @@
       </form>
     </section>
 
+    <!-- 통계는 부가 정보라 접어둠. 순수 HTML details라 별도 JS 불필요 -->
+    <details class="panel" id="statsPanel">
+      <summary>월별 통계 보기</summary>
+      <canvas id="statsChart"></canvas>
+    </details>
+    </div>
+
+    <div class="col-main">
     <!-- 목록 패널: 검색+기간필터를 목록 바로 위 툴바 한 줄로 묶음 -->
     <section class="panel" id="listPanel">
       <div class="toolbar">
@@ -67,12 +77,8 @@
         <span id="costSummary"></span>
       </div>
     </section>
-
-    <!-- 통계는 부가 정보라 접어둠. 순수 HTML details라 별도 JS 불필요 -->
-    <details id="statsPanel">
-      <summary>월별 통계 보기</summary>
-      <canvas id="statsChart"></canvas>
-    </details>
+    </div>
+    </div>
   </div>
 
   <script src="app.js"></script>

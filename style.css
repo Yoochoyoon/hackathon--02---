@@ -57,11 +57,19 @@ body {
   line-height: 1.5;
 }
 
-/* 화면이 넓어도 글줄이 너무 길어지지 않게 가둔다 */
+/* 화면이 넓어도 글줄이 너무 길어지지 않게 가둔다.
+ * 데스크톱 폭(--bp-desktop 이상)에서는 2단 배치가 켜지므로 컨테이너를 넓힌다 */
 main, .container, #app {
   max-width: 560px;
   margin: 0 auto;
 }
+
+/* ── 2단 배치 (폼+통계 | 목록) — 넓은 화면에서 양옆 여백을 줄인다 ─── */
+
+.layout { display: block; }
+
+.col-side > *:first-child,
+.col-main > *:first-child { margin-top: 0; }
 
 h1 {
   font-size: 22px;
@@ -286,6 +294,23 @@ button.danger, button[data-action="delete"] {
   /* 손가락으로 누르기 좋은 크기로 키운다 (LDSG 최소 터치 44px 권장) */
   .btn, button { padding: 12px var(--sp-4); }
   input, textarea, select { padding: 12px var(--sp-3); }
+}
+
+/* 데스크톱: 폼+통계(왼쪽 고정폭) / 목록(오른쪽 가변폭) 2단 배치.
+ * 목록이 항목 수에 따라 세로로 늘어나므로 오른쪽을 더 넓게 준다 */
+@media (min-width: 860px) {
+  main, .container, #app { max-width: 1180px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    align-items: start;
+    gap: var(--sp-5);
+  }
+}
+
+@media (min-width: 1400px) {
+  main, .container, #app { max-width: 1320px; }
 }
 
 @media print {
