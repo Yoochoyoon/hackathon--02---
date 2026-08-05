@@ -168,6 +168,64 @@ button.danger, button[data-action="delete"] {
   border-radius: var(--radius);
 }
 
+/* ── 패널 배치 (구조 재구성, 2026-08-05. 색상·타이포는 손대지 않음 —
+ * 비주얼 디자인은 디자인 스펙 확정 뒤 별도로 입힐 예정) ────────── */
+
+.panel { margin-top: 20px; }
+
+/* 검색 + 기간 필터를 목록 위 툴바 한 줄로 묶는다 (TodoMVC 참고) */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.toolbar #searchBox { flex: 1 1 200px; margin: 0; }
+
+#filterControls { display: flex; gap: 10px; flex-wrap: wrap; }
+
+#filterControls label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* 목록 하단 상태 바: 개수 + 회비 합계 (TodoMVC의 "3 items left!" 자리) */
+.list-status {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.category-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* 통계는 부가 정보라 접어둔다. 네이티브 details라 JS 불필요 */
+#statsPanel { margin-top: 20px; }
+
+#statsPanel summary {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+#statsPanel canvas { margin-top: 10px; }
+
 /* ── 통계 차트 ─────────────────────────────────────────── */
 
 #statsChart {
@@ -192,6 +250,8 @@ button.danger, button[data-action="delete"] {
   }
 
   h1 { font-size: 20px; }
+
+  .toolbar { flex-direction: column; }
 
   #statsChart { height: 170px; }
 

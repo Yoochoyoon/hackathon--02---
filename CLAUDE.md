@@ -44,15 +44,20 @@
 
 ```js
 {
-  id: string,          // 고유 식별자
-  title: string,       // 활동명 (필수)
-  date: string,         // YYYY-MM-DD, 미래 날짜 불가
-  place: string,        // 장소
-  memberCount: number,  // 참여 인원, 1 이상 정수
-  memo: string,          // 메모
-  createdAt: string     // 등록 시각 (ISO)
+  id: string,           // 고유 식별자
+  title: string,        // 활동명 (필수)
+  date: string,          // YYYY-MM-DD, 미래 날짜 불가 (필수)
+  place: string,         // 장소
+  memberCount: number,   // 참여 인원, 1 이상 정수 (필수)
+  category: string,      // 활동 유형: 정기모임 | 행사 | 봉사 | 기타
+  attendees: string[],   // 참여자 명단 (선택 입력, 쉼표로 구분해 배열로 저장)
+  cost: number,          // 활동에 사용한 회비 금액, 원 단위 (선택, 기본 0)
+  memo: string,           // 메모
+  createdAt: string      // 등록 시각 (ISO)
 }
 ```
+
+> 2026-08-05 14:50경 추가: 태그(category)·참여자 명단(attendees)·회비(cost) 필드, 같은 날짜+활동명 중복 등록 시 확인창. 기존 `title`/`date`/`memberCount`/`place`/`memo` 필드는 그대로라 features.js·style.css는 수정 없이도 동작함.
 
 ## 5. 코딩 규칙
 
@@ -86,12 +91,13 @@
 ## 9. 현재 진행 상황
 
 ### 필수기능 (유초윤 · `feat/core`)
-- [ ] 활동 등록
-- [ ] 최신순 목록 조회
-- [ ] 삭제 (확인 포함)
-- [ ] 입력값 검증
-- [ ] 수정 기능
-- [ ] 기간 필터
+- [x] 활동 등록
+- [x] 최신순 목록 조회
+- [x] 삭제 (확인 포함)
+- [x] 입력값 검증
+- [x] 수정 기능
+- [x] 기간 필터
+- [x] (추가) 활동 유형 태그, 참여자 명단, 회비 사용 금액, 중복 등록 확인
 
 ### 차별화기능 (신찬영 · `feat/ui`)
 - [ ] 반응형 레이아웃
