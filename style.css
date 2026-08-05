@@ -148,7 +148,7 @@ textarea { min-height: 64px; resize: vertical; }
 .btn:hover, button:hover { opacity: 0.7; }
 .btn:active, button:active { opacity: 0.5; }
 
-/* 삭제처럼 되돌릴 수 없는 동작: role-negative */
+/* 삭제처럼 되돌릴 수 없는 동작: 기본은 테두리만, hover 시 빨갛게 채운다 */
 button.danger, button[data-action="delete"] {
   background: transparent;
   color: var(--negative);
@@ -158,13 +158,31 @@ button.danger, button[data-action="delete"] {
   font-weight: 500;
 }
 
-/* 수정 버튼: 검정 utility 톤 */
+button.danger:hover, button[data-action="delete"]:hover {
+  background: var(--negative);
+  color: #fff;
+  opacity: 1;
+}
+
+button.danger:active, button[data-action="delete"]:active { opacity: 0.7; }
+
+/* 수정 버튼: 기본은 테두리만, hover 시 검정으로 채운다 */
 #activityList button:not([data-action="delete"]) {
-  background: var(--gray-900);
+  background: transparent;
+  color: var(--gray-900);
+  border: 1px solid currentColor;
   padding: 6px var(--sp-3);
   font-size: 13px;
   font-weight: 400;
 }
+
+#activityList button:not([data-action="delete"]):hover {
+  background: var(--gray-900);
+  color: #fff;
+  opacity: 1;
+}
+
+#activityList button:not([data-action="delete"]):active { opacity: 0.7; }
 
 /* 오류 메시지 */
 .error, #formError {
@@ -194,7 +212,10 @@ button.danger, button[data-action="delete"] {
   gap: var(--sp-1);
   font-size: 13px;
   color: var(--gray-600);
+  white-space: nowrap;
 }
+
+#filterControls input { width: auto; }
 
 #searchEmpty {
   display: none;
@@ -287,7 +308,10 @@ button.danger, button[data-action="delete"] {
 
   #activityForm { grid-template-columns: 1fr; }
 
+  /* flex-direction: column에서는 flex-basis가 높이(세로축) 기준이 돼서
+   * searchBox의 "flex: 1 1 200px"가 세로로 쭉 늘어나 버린다. 고정 높이로 되돌린다 */
   .toolbar { flex-direction: column; }
+  .toolbar #searchBox { flex: none; width: 100%; }
 
   #statsChart { height: 170px; }
 
